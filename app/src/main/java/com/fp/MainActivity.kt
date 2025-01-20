@@ -58,83 +58,18 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun ArtistApp() {
-    ArtistList(
-        artistList = Datasource().loadArtist()
-    )
+    Text(text="A Completar por el alumno. Investiga itemsIndexed")
 }
 
 @Composable
 fun ArtistList(artistList: List<Artist>, modifier: Modifier = Modifier) {
-    LazyColumn(modifier = modifier) {
-        itemsIndexed(artistList) { index, artist ->
-            ArtistCard(
-                artist = artist,
-                numberInTheList = (index + 1).toString() // Convertir el índice en número (inicia desde 1)
-            )
-        }
-    }
+
+    Text(text="A Completar por el alumno. Investiga itemsIndexed")
 }
 
 @Composable
 fun ArtistCard(artist: Artist, numberInTheList: String, modifier: Modifier = Modifier) {
-    Column(modifier = Modifier.padding(15.dp)) {
-        Image(
-            painter = painterResource(artist.imageResourceId),
-            contentDescription = artist.name,
-            modifier = modifier
-                .fillMaxWidth()
-                .height(194.dp),
-            contentScale = ContentScale.Crop
-        )
-        Card(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(8.dp), // Margen para separar del resto
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 6.dp
-            )
-        ) {
-            Row(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(8.dp), // Espaciado interno del rectángulo
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(text = numberInTheList, fontSize = 20.sp)
-                Text(text = artist.name, fontWeight = FontWeight.Bold)
-            }
-
-        }
-
-        Row(modifier = modifier) {
-            Image(
-                painter = painterResource(R.drawable.calendar),
-                contentDescription = "Birthday",
-                modifier = modifier
-                    .height(50.dp)
-                    .width(50.dp)
-                    .padding(8.dp),
-
-                contentScale = ContentScale.Fit
-            )
-            Text(text = artist.birthday.toString(), modifier = modifier.padding(15.dp))
-        }
-        Row(modifier = modifier) {
-            Image(
-                painter = painterResource(R.drawable.dollar),
-                contentDescription = "Salary",
-                modifier = modifier
-                    .height(50.dp)
-                    .width(50.dp)
-                    .padding(8.dp),
-
-                contentScale = ContentScale.Fit
-            )
-            Text(text = artist.salary.toString(), modifier = modifier.padding(15.dp))
-        }
-        Spacer(modifier = modifier.height(10.dp))
-        Text(text = stringResource(artist.stringResourceId), fontSize = 10.sp)
-    }
+    Text(text="A Completar por el alumno")
 }
 
 
