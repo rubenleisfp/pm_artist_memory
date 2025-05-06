@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -35,11 +38,16 @@ import androidx.compose.ui.unit.sp
 import com.fp.data.Datasource
 import com.fp.model.Artist
 import com.fp.ui.theme.ArtistMemoryTheme
+import com.fp.vm.ArtistViewModel
 import java.time.LocalDate
 
 class MainActivity : ComponentActivity() {
+
+    private val artistViewModel by viewModels<ArtistViewModel>()
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
+        artistViewModel.loadArtist()
         super.onCreate(savedInstanceState)
         setContent {
             ArtistMemoryTheme {
@@ -48,7 +56,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ArtistApp()
+                    ArtistApp(artistViewModel)
                 }
             }
         }
@@ -57,9 +65,11 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun ArtistApp() {
+fun ArtistApp(artistViewModel: ArtistViewModel) {
+
+    val artists by artistViewModel.artists.collectAsState()
     ArtistList(
-        artistList = Datasource().loadArtist()
+        artistList = artists
     )
 }
 
@@ -141,9 +151,9 @@ fun ArtistCard(artist: Artist, numberInTheList: String, modifier: Modifier = Mod
 @RequiresApi(Build.VERSION_CODES.O)
 @Preview(showBackground = true)
 @Composable
-fun ArtistAppPreview() {
+fun ArtistListPreview() {
     ArtistMemoryTheme {
-       ArtistApp()
+        ArtistList(Datasource().loadArtist())
     }
 }
 
